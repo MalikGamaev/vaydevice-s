@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 
-module.exports = new Sequelize('postgresql://vaydevice_database_user:bTqZAgJeIiKJYP9oyaAAo3sOg9pZVjZC@dpg-csa20ja3esus739ofaa0-a.oregon-postgres.render.com/vaydevice_database?sslmode=no-verify',
+module.exports = new Sequelize('postgresql://vaydevice_database_user:bTqZAgJeIiKJYP9oyaAAo3sOg9pZVjZC@dpg-csa20ja3esus739ofaa0-a.oregon-postgres.render.com/vaydevice_database?',
 	{
 		pool: {
 			max: 3,
@@ -10,7 +10,8 @@ module.exports = new Sequelize('postgresql://vaydevice_database_user:bTqZAgJeIiK
 		},
 		dialectOptions: {
 			ssl: {
-				require: true
+				require: true,
+				rejectUnauthorized: false
 			},
 			keepAlive: true
 		}

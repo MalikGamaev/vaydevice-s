@@ -1,21 +1,16 @@
 const { Sequelize } = require('sequelize');
 
 
-module.exports = new Sequelize('postgresql://vaydevice_database_user:bTqZAgJeIiKJYP9oyaAAo3sOg9pZVjZC@dpg-csa20ja3esus739ofaa0-a.oregon-postgres.render.com/vaydevice_database?',
+module.exports = new Sequelize(
+	process.env.DB_NAME,
+	process.env.DB_USER,
+	process.env.DB_PASSWORD,
 	{
-		pool: {
-			max: 3,
-			min: 1,
-			idle: 10000,
-		},
-		dialectOptions: {
-			ssl: {
-				require: true,
-				rejectUnauthorized: false
-			},
-			keepAlive: true
-		}
+		dialect: 'postgres',
+		host: process.env.DB_HOST,
+		port: process.env.DB_PORT,
 	}
+
 
 )
 

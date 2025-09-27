@@ -21,6 +21,26 @@ class BasketController {
 		return res.json(basket)
 	}
 
+	async deleteToBasket(req, res) {
+  const user = req.user;
+  const { deviceId } = req.body; // получаем deviceId из тела запроса
+
+  // Удаляем запись корзины, соответствующую userId и deviceId
+  const result = await BasketDevice.destroy({
+    where: {
+      basketId: user.id,
+      deviceId: deviceId
+    }
+  });
+
+  if (result === 0) {
+    // Если ничего не удалилось (запись не найдена)
+    return res.status(404).json({ message: "Товар не найден в корзине" });
+  }
+
+  return res.json({ message: "Товар удалён из корзины" });
+}
+
 }
 
 module.exports = new BasketController()

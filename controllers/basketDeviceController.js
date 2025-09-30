@@ -42,7 +42,7 @@ class BasketController {
       const deletedRowsCount = await BasketDevice.destroy({
         where: {
           basketId: basket.id,
-          deviceId: deviceId
+          id: deviceId
         }
       });
 

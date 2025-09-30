@@ -10,6 +10,7 @@ const User = sequelize.define('user', {
 
 const Basket = sequelize.define('basket', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+	userId: { type: DataTypes.INTEGER, unique: true }
 })
 
 const BasketDevice = sequelize.define('basket_device', {
@@ -44,8 +45,8 @@ const TypeBrand = sequelize.define('type_brand', {
 })
 
 
-User.hasOne(Basket)
-Basket.belongsTo(User)
+User.hasOne(Basket, { foreignKey: 'userId' });
+Basket.belongsTo(User, { foreignKey: 'userId' });
 
 Basket.hasMany(BasketDevice)
 BasketDevice.belongsTo(Basket)

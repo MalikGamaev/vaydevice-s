@@ -6,32 +6,34 @@ const { where } = require('sequelize')
 
 class DeviceController {
 	async create(req, res, next) {
-		try {
-			const { name, price, typeId, brandId, info } = req.body
-			const { img } = req.files
-			let fileName = uuid.v4() + ".jpg"
-			img.mv(path.resolve(__dirname, '..', 'static', fileName))
-			const device = await Device.create({ name, price, brandId, typeId, img: fileName })
+  try {
+    const { name, price, typeId, brandId, info, img } = req.body;
 
-			if (info) {
-				info = JSON.parse(info)
-				info.forEach(i =>
-					DeviceInfo.create({
-						title: i.title,
-						description: i.description,
-						deviceId: device.id
-					})
-				)
-			}
+    // img - это URL картинки, пришедший с фронтенда после загрузки на Cloudinary
 
-			return res.json(device)
-		} catch (e) {
-			next(ApiError.badRequest(e.message))
-		}
+    const device = await Device.create({
+      name,
+      price,
+      brandId,
+      typeId,
+      img, // сохраняем URL
+    });
 
-
-
-	}
+    if (info) {
+      const parsedInfo = JSON.parse(info);
+      for (const i of parsedInfo) {
+        await DeviceInfo.create({
+          title: i.title,
+          description: i.description,
+          deviceId: device.id,
+        });
+      }
+    }
+    return res.json(device);
+  } catch (e) {
+    next(ApiError.badRequest(e.message));
+  }
+}
 
 	async getAll(req, res) {
 		let { brandId, typeId, limit, page } = req.query

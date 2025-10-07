@@ -19,7 +19,7 @@ class DeviceController {
       img, // сохраняем URL
     });
 
-    if (info) {
+    if (info !== '[]') {
       const parsedInfo = JSON.parse(info);
       for (const i of parsedInfo) {
         await DeviceInfo.create({

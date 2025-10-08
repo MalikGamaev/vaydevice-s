@@ -42,13 +42,13 @@ class DeviceController {
   		typeId = typeId ? Number(typeId) : undefined;
   		limit = limit ? Number(limit) : 9;
   		page = page ? Number(page) : 1;
-  		
-
+  		const offset = page * limit - limit;
+		
   		const where = {};
   		if (brandId) where.brandId = brandId;
   		if (typeId) where.typeId = typeId;
 
-  		const devices = await Device.findAndCountAll({ where, limit, page });
+  		const devices = await Device.findAndCountAll({ where, limit, offset });
 
   		return res.json(devices);
 }

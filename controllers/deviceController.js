@@ -36,26 +36,22 @@ class DeviceController {
 }
 
 	async getAll(req, res) {
-		let { brandId, typeId, limit, page } = req.query
-		page = page || 1
-		limit = limit || 9
-		let offset = page * limit - limit
-		let devices;
-		if (!brandId && !typeId) {
-			devices = await Device.findAndCountAll({ limit, offset })
-		}
-		if (brandId && !typeId) {
-			devices = await Device.findAndCountAll({ where: { brandId }, limit, offset })
-		}
-		if (!brandId && typeId) {
-			devices = await Device.findAndCountAll({ where: { typeId }, limit, offset })
-		}
-		if (brandId && typeId) {
-			devices = await Device.findAndCountAll({ where: { typeId, brandId }, limit, offset })
-		}
+  		let { brandId, typeId, limit, page } = req.query;
 
-		return res.json(devices)
-	}
+  		brandId = brandId ? Number(brandId) : undefined;
+  		typeId = typeId ? Number(typeId) : undefined;
+  		limit = limit ? Number(limit) : 9;
+  		page = page ? Number(page) : 1;
+  		
+
+  		const where = {};
+  		if (brandId) where.brandId = brandId;
+  		if (typeId) where.typeId = typeId;
+
+  		const devices = await Device.findAndCountAll({ where, limit, page });
+
+  		return res.json(devices);
+}
 
 	async getOne(req, res) {
 		const { id } = req.params

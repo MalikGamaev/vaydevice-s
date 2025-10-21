@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 
-module.exports = new Sequelize('postgresql://vaydevice_database_sbmv_user:hkHEhyKeTFhK7r26Z1FfpGNgcW4fHUfn@dpg-d36j0g3uibrs739cqvkg-a/vaydevice_database_sbmv',
+module.exports = new Sequelize('postgresql://waydevice_database_user:FjIDT7X17bdmiPboVI7IMth7XmSNcmvs@dpg-d3rjoj8dl3ps73ffkhbg-a/waydevice_database',
 	{
 		pool: {
 			max: 3,

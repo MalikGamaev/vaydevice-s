@@ -8,6 +8,7 @@ class DeviceController {
 	async create(req, res, next) {
   try {
     const { name, price, typeId, brandId, info, img } = req.body;
+	 console.log(req.body)
 
     // img - это URL картинки, пришедший с фронтенда после загрузки на Cloudinary
 
@@ -36,17 +37,18 @@ class DeviceController {
 }
 
 	async getAll(req, res) {
-  		let { brandId, typeId, limit, page } = req.query;
+  		let { brandId, typeId, limit, page, searchName } = req.query;
 
   		brandId = brandId ? Number(brandId) : undefined;
   		typeId = typeId ? Number(typeId) : undefined;
   		limit = limit ? Number(limit) : 9;
   		page = page ? Number(page) : 1;
   		const offset = page * limit - limit;
-		
+
   		const where = {};
   		if (brandId) where.brandId = brandId;
   		if (typeId) where.typeId = typeId;
+		if (searchName) where.name = searchName
 
   		const devices = await Device.findAndCountAll({ where, limit, offset });
 

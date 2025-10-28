@@ -2,7 +2,7 @@ const uuid = require('uuid')
 const path = require('path')
 const { Device, DeviceInfo } = require('../models/models')
 const ApiError = require('../error/ApiError')
-const { where } = require('sequelize')
+const { where, Op } = require('sequelize')
 
 class DeviceController {
 	async create(req, res, next) {
@@ -48,7 +48,7 @@ class DeviceController {
   		const where = {};
   		if (brandId) where.brandId = brandId;
   		if (typeId) where.typeId = typeId;
-		if (searchName) where.name = searchName
+		if (searchName) where.name = { [Op.iLike]: `%${searchName}%` }
 
   		const devices = await Device.findAndCountAll({ where, limit, offset });
 

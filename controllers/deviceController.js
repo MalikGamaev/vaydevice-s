@@ -26,6 +26,7 @@ class DeviceController {
         await DeviceInfo.create({
           title: i.title,
           description: i.description,
+			 number: i.number,
           deviceId: device.id,
         });
       }
@@ -74,6 +75,7 @@ class DeviceController {
 					await DeviceInfo.create({
 						title: i.title,
           			description: i.description,
+						number: i.number,
           			deviceId,
 					})
 				}

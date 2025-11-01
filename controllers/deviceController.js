@@ -55,6 +55,34 @@ class DeviceController {
   		return res.json(devices);
 }
 
+	async update(req, res, next) {
+		try {
+			const { name, price, info, img } = req.body
+			const deviceId = req.query.id
+
+			await Device.update(
+				{ name, price, img },
+				{ where: { id: deviceId } }
+			)
+
+			if(info !== '[]') {
+				const parsedInfo = JSON.parse(info);
+				await DeviceInfo.destroy({where: {deviceId}})
+
+				for(const i of parsedInfo) {
+					await DeviceInfo.create({
+						title: i.title,
+          			description: i.description,
+          			deviceId,
+					})
+				}
+			}
+		} catch (e) {
+			next(ApiError.badRequest(e.message))
+		}
+		
+	}
+
 	async getOne(req, res) {
 		const { id } = req.params
 		const device = await Device.findOne({

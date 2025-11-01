@@ -60,7 +60,7 @@ class DeviceController {
 			const { name, price, info, img } = req.body
 			const deviceId = req.params.id
 
-			console.log(deviceId. name, price, info, img)
+			console.log(deviceId, name, price, info, img)
 			await Device.update(
 				{ name, price, img },
 				{ where: { id: deviceId } }

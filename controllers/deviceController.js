@@ -8,7 +8,7 @@ class DeviceController {
 	async create(req, res, next) {
   try {
     const { name, price, typeId, brandId, info, img } = req.body;
-	 console.log(req.body)
+	 
 
     // img - это URL картинки, пришедший с фронтенда после загрузки на Cloudinary
 
@@ -60,6 +60,7 @@ class DeviceController {
 			const { name, price, info, img } = req.body
 			const deviceId = req.params.id
 
+			console.log(deviceId. name, price, info, img)
 			await Device.update(
 				{ name, price, img },
 				{ where: { id: deviceId } }
@@ -79,6 +80,7 @@ class DeviceController {
 			}
 		} catch (e) {
 			next(ApiError.badRequest(e.message))
+			console.log(e)
 		}
 		
 	}

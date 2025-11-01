@@ -92,33 +92,6 @@ class DeviceController {
 		return res.json(device)
 	}
 
-	async createBasketDevice(req, res, next) {
-		const { id, userId } = req.body;
-		const userBasket = await Basket.findOne({ where: { userId } });
-		const deviceBasket = await BasketDevice.create({ deviceId: id, basketId: userBasket.id });
-		return res.json(deviceBasket);
-	}
-
-	async rate(req, res, next) {
-		const { userId, deviceId, rate } = req.body;
-		const userRaiting = await Rating.findOne({ where: { userId } });
-		if (userRaiting) {
-			const updateRating = await Rating.update({ rate: rate }, { where: { id: deviceId } });
-		}
-		const deviceRate = await Rating.create({ userId, deviceId, rate });
-		const ratingAvg = await Rating.findOne({
-			attributes: [sequelize.fn('AVG', sequelize.col('rate'))],
-			raw: true,
-		});
-
-		const updatedDevice = await Device.update(
-			{
-				rating: Math.floor(Number(ratingAvg.avg)),
-			},
-			{ where: { id: deviceId } },
-		);
-		return res.json(updatedDevice);
-	}
 }
 
 module.exports = new DeviceController()

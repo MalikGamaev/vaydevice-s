@@ -58,7 +58,7 @@ class DeviceController {
 	async update(req, res, next) {
 		try {
 			const { name, price, info, img } = req.body
-			const deviceId = req.query.id
+			const deviceId = req.params.id
 
 			await Device.update(
 				{ name, price, img },

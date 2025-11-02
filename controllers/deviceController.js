@@ -101,8 +101,7 @@ class DeviceController {
 	async delete(req, res) {
 		try {
 			const { id } = req.params
-
-			await Device.destroy({where: id})
+			await Device.destroy({where: {id}})
 			return res.json({message: 'Устройство успешно удалено!'})
 		} catch (e) {
 			next(ApiError.badRequest(e.message))

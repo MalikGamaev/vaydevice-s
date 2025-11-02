@@ -26,7 +26,6 @@ class DeviceController {
         await DeviceInfo.create({
           title: i.title,
           description: i.description,
-			 number: i.number,
           deviceId: device.id,
         });
       }
@@ -61,7 +60,6 @@ class DeviceController {
 			const { name, price, info, img } = req.body
 			const deviceId = req.params.id
 
-			console.log(deviceId, name, price, info, img)
 			await Device.update(
 				{ name, price, img },
 				{ where: { id: deviceId } }
@@ -69,14 +67,12 @@ class DeviceController {
 
 			if(info !== '[]') {
 				const parsedInfo = JSON.parse(info);
-				console.log(parsedInfo)
 				await DeviceInfo.destroy({where: {deviceId}})
 
 				for(const i of parsedInfo) {
 					await DeviceInfo.create({
 						title: i.title,
           			description: i.description,
-						number: i.number,
           			deviceId,
 					})
 				}

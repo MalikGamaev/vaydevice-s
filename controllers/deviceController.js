@@ -69,6 +69,7 @@ class DeviceController {
 
 			if(info !== '[]') {
 				const parsedInfo = JSON.parse(info);
+				console.log(parsedInfo)
 				await DeviceInfo.destroy({where: {deviceId}})
 
 				for(const i of parsedInfo) {

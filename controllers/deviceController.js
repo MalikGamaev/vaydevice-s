@@ -6,11 +6,8 @@ const { where, Op } = require('sequelize')
 
 class DeviceController {
 	async create(req, res, next) {
-  try {
+  	try {
     const { name, price, typeId, brandId, info, img } = req.body;
-	 
-
-    // img - это URL картинки, пришедший с фронтенда после загрузки на Cloudinary
 
     const device = await Device.create({
       name,
@@ -37,7 +34,8 @@ class DeviceController {
 }
 
 	async getAll(req, res) {
-  		let { brandId, typeId, limit, page, searchName } = req.query;
+		try {
+			let { brandId, typeId, limit, page, searchName } = req.query;
 
   		brandId = brandId ? Number(brandId) : undefined;
   		typeId = typeId ? Number(typeId) : undefined;
@@ -53,6 +51,10 @@ class DeviceController {
   		const devices = await Device.findAndCountAll({ where, limit, offset });
 
   		return res.json(devices);
+		} catch (e) {
+			next(ApiError.badRequest(e.message))
+		}
+  		
 }
 
 	async update(req, res, next) {
@@ -80,18 +82,32 @@ class DeviceController {
 			return res.json({ message: 'Устройство обновлено' });
 		} catch (e) {
 			next(ApiError.badRequest(e.message))
-			console.log(e)
 		}
-		
 	}
 
-	async getOne(req, res) {
-		const { id } = req.params
-		const device = await Device.findOne({
+	async getOne(req, res, next) {
+		try {
+			const { id } = req.params
+			const device = await Device.findOne({
 			where: { id },
 			include: [{ model: DeviceInfo, as: 'info' }]
 		})
 		return res.json(device)
+		} catch (e) {
+			next(ApiError.badRequest(e.message))
+		}
+	}
+
+	async delete(req, res) {
+		try {
+			const { id } = req.params
+
+			await Device.destroy({where: id})
+			return res.json({message: 'Устройство успешно удалено!'})
+		} catch (e) {
+			next(ApiError.badRequest(e.message))
+		}
+		
 	}
 
 }

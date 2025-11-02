@@ -77,6 +77,7 @@ class DeviceController {
 					})
 				}
 			}
+			return
 		} catch (e) {
 			next(ApiError.badRequest(e.message))
 			console.log(e)

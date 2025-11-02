@@ -77,7 +77,7 @@ class DeviceController {
 					})
 				}
 			}
-			return
+			return res.json({ message: 'Устройство обновлено' });
 		} catch (e) {
 			next(ApiError.badRequest(e.message))
 			console.log(e)

@@ -77,11 +77,7 @@ class DeviceController {
 					})
 				}
 			}
-			const device = await Device.findOne({
-			where: { id: deviceId },
-			include: [{ model: DeviceInfo, as: 'info' }]
-			})
-			return res.json(device);
+			return res.json({ message: 'Устройство обновлено' });
 		} catch (e) {
 			next(ApiError.badRequest(e.message))
 			console.log(e)

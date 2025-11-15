@@ -10,6 +10,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@a2seven/yoo-checkout": "^1.1.4",
 		"bcrypt": "^5.1.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
@@ -19,7 +20,7 @@
 		"pg": "^8.9.0",
 		"pg-hstore": "^2.3.4",
 		"sequelize": "^6.28.0",
-		"uuid": "^9.0.0"
+		"uuid": "^9.0.1"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.20"

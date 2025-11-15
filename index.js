@@ -7,6 +7,7 @@ const fileUpload = require('express-fileupload')
 const router = require('./routes/index')
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const path = require('path')
+const { YooCheckout } = require('@a2seven/yoo-checkout') 
 
 const PORT = process.env.PORT || 10000
 
@@ -21,6 +22,12 @@ app.use('/api', router)
 
 //Обработка ошибокб последний Middleware
 app.use(errorHandler)
+
+
+const checkout = new YooCheckout({ 
+	shopId: process.env.YK_SHOP_ID, 
+	secretKey: process.env.YK_SECRET_KEY 
+});
 
 
 

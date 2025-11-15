@@ -10,6 +10,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 router.get('/', authMiddleware, basketController.getBasketUser)
 router.post('/', authMiddleware, basketController.addToBasket)
 router.delete('/:deviceId', authMiddleware, basketController.deleteToBasket);
+router.post('/create-payment', authMiddleware, basketController.createPayment)
 
 
 

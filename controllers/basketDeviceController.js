@@ -1,4 +1,12 @@
 const { Device, BasketDevice, Basket } = require("../models/models")
+const { YooCheckout, ICreatePayment  } = require('@a2seven/yoo-checkout')
+const {v4} = require('uuid')
+
+const YooKassa = new YooCheckout({ 
+	shopId: process.env.YK_SHOP_ID,
+	secretKey: process.env.YK_SECRET_KEY 
+});
+
 
 class BasketController {
 	async addToBasket(req, res, next) {
@@ -55,6 +63,34 @@ class BasketController {
       console.error("Ошибка при удалении товара из корзины:", error);
       return res.status(500).json({ message: "Внутренняя ошибка сервера" });
     }
+  }
+
+  async createPayment(req, res) {
+	const idempotenceKey = v4().toString();
+	const createPayload = {
+    amount: {
+      value: req.body.amount,
+      currency: 'RUB',
+    },
+    payment_method_data: {
+      type: 'bank_card',
+    },
+    confirmation: {
+      type: 'redirect',
+      return_url: req.body.return_url,
+    },
+	 metadata: {
+		userId: req.body.userId
+	 }
+  };
+
+  try {
+    const payment = await YooKassa.createPayment(createPayload, idempotenceKey);
+    res.json({ payment });
+  } catch (error) {
+    console.error('Ошибка создания платежа:', error);
+    res.status(500).json({ message: 'Ошибка создания платежа' });
+  }
   }
 
 }

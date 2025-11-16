@@ -78,7 +78,7 @@ class BasketController {
     },
     confirmation: {
       type: 'redirect',
-      return_url: 'https://vaydevice-s-6.onrender.com/',
+      return_url: 'https://waydevice-c.vercel.app',
     },
 	 metadata: {
 		userId

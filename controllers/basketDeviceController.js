@@ -67,6 +67,7 @@ class BasketController {
 
   async createPayment(req, res) {
 	const {amount, userId} = req.body
+	console.log(amount, userId)
 	const idempotenceKey = v4().toString();
 	const createPayload = {
     amount: {

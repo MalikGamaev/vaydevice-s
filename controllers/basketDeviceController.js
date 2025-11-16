@@ -67,7 +67,6 @@ class BasketController {
 
   async createPayment(req, res) {
 	const {amount, userId} = req.body
-	console.log(req.body)
 	const idempotenceKey = v4().toString();
 	const createPayload = {
     amount: {
@@ -79,7 +78,7 @@ class BasketController {
     },
     confirmation: {
       type: 'redirect',
-      return_url: 'http://localhost:5173/',
+      return_url: 'https://vaydevice-s-6.onrender.com/',
     },
 	 metadata: {
 		userId

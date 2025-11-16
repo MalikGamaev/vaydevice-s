@@ -89,8 +89,8 @@ class BasketController {
     const payment = await YooKassa.createPayment(createPayload, idempotenceKey);
     res.json({ payment });
   } catch (error) {
-    console.error('Ошибка создания платежа:', error);
-    res.status(500).json({ message: 'Ошибка создания платежа' });
+    console.error('Ошибка создания платежа:', error.response?.data || error.message || error);
+    res.status(500).json({ message: 'Ошибка создания платежа', details: error.response?.data || error.message });
   }
   }
 

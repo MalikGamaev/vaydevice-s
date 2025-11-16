@@ -66,10 +66,11 @@ class BasketController {
   }
 
   async createPayment(req, res) {
+	const {amount, userId} = req.body
 	const idempotenceKey = v4().toString();
 	const createPayload = {
     amount: {
-      value: req.body.amount,
+      value: parseFloat(amount).toFixed(2).toString(),
       currency: 'RUB',
     },
     payment_method_data: {
@@ -77,10 +78,10 @@ class BasketController {
     },
     confirmation: {
       type: 'redirect',
-      return_url: req.body.return_url,
+      return_url: 'http://localhost:5173/',
     },
 	 metadata: {
-		userId: req.body.userId
+		userId
 	 }
   };
 
